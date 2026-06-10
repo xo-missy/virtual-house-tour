@@ -168,7 +168,7 @@ export default function ThreeHouseTour({
     rendererRef.current = renderer;
 
     const controls = new PointerLockControls(camera, renderer.domElement);
-    scene.add(controls.getObject());
+    scene.add(camera);
     controlsRef.current = controls;
 
     // Add controls listeners to notify React (if needed)
@@ -1023,10 +1023,8 @@ export default function ThreeHouseTour({
     const dir = new THREE.Vector3().subVectors(teleportTarget.lookAt, teleportTarget.pos).normalize();
     const yaw = Math.atan2(dir.x, dir.z);
     
-    // Set yaw on PointerLock controls object
-    controls.getObject().rotation.y = 0;
-    camera.rotation.set(0, 0, 0);
-    controls.getObject().rotation.y = yaw;
+    // Set yaw on camera directly
+    camera.rotation.set(0, yaw, 0);
 
     clearTeleportTarget();
 
